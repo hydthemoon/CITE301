@@ -2,11 +2,12 @@ import cv2
 import os
 import shutil
 
+
 ## FILE 생성
 shutil.rmtree('C:/cited3_img', ignore_errors = True)
 os.mkdir('C:/cited3_img')
 
-vidcap = cv2.VideoCapture('C:/cite301/cited3_vid/vid_lecture1.mp4')
+vidcap = cv2.VideoCapture('C:/cited3_vid/vid_lecture1.mp4')
 cnt = 0
 
 while(vidcap.isOpened()):
