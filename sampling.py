@@ -2,7 +2,6 @@ import cv2
 import os
 import shutil
 
-
 ## FILE 생성
 shutil.rmtree('C:/cited3_img', ignore_errors = True)
 os.mkdir('C:/cited3_img')
