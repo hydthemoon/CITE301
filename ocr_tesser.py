@@ -34,24 +34,32 @@ def deskew(image):
     rotated = cv2.warpAffine(image, M, (w, h), flags = cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
     return rotated
 
-shutil.rmtree('C:/cited3_tesseract', ignore_errors = True)
-os.mkdir('C:/cited3_tesseract')
+###     SETTING     ###
+vid_target = "lyrics_coldplay_2"
+start = 1
+end = 200
+###     SETTING end ###
 
-filename = "C:/cited3_img/frame0.jpg"
-image = cv2.imread(filename)
 
-cv2.imshow('original', image)
-image = get_grayscale(image)
-cv2.imshow('grayscle', image)
-image = thresholding(image)
-cv2.imshow('threshold', image)
-image = opening(image)
-cv2.imshow('erosion', image)
-image = canny(image)
-cv2.imshow('canny', image)
-cv2.waitKey(0)
-text = pytesseract.image_to_string(image, lang = "eng")
+i = start
+while i <= end :
+    filename = "C:/cited3_db/cited3_image_sample/{0}/frame{1}.jpg".format(vid_target, i)
+    image = cv2.imread(filename)
+    image = get_grayscale(image)
+    image = thresholding(image)
 
-f_txt = open("C:/cited3_tesseract/frame0.txt", 'w')
-f_txt.write(text)
-f_txt.close()
+### OCR-TESSERACT   ###
+    text = pytesseract.image_to_string(image, lang = "eng").replace(" ", "")
+### OCR end         ###
+
+    if i == start:
+        f_txt = open("C:/cited3_db/cited3_tesseract/{0}.txt".format(vid_target), 'w', -1, 'utf-8')
+        f_txt.write("sample{0}\n".format(i))
+        f_txt.write(text)
+        f_txt.close()
+    else :
+        f_txt = open("C:/cited3_db/cited3_tesseract/{0}.txt".format(vid_target), 'a', -1, 'utf-8')
+        f_txt.write("\nsample{0}\n".format(i))
+        f_txt.write(text)
+        f_txt.close()
+    i += 1
